@@ -1,7 +1,6 @@
 """
-We all like to compare our grades with other and see if we are among top (Elites)
-This script takes xml file(table) of all the student grades and sort it
-And save the result in html file
+This code parses an XML file (that was exported from a PDF which our university published)
+to output a list of students, sorted by their grades.
 """
 from xml.etree.ElementTree import parse
 from operator import itemgetter
@@ -21,16 +20,16 @@ def scrape_xml(document):
     return admis
 
 
-def normalize_name(firstname, lastname):
+def normalize_name(first_name, last_name):
     """
-    The names in our data are stored all in uppercase, we only need the first letter to be upper
+    The names in our data are stored all in uppercase, so we "normalize" it
     Examples:
     normalize_name("NIKOLA", "TESLA") == "Nikola Tesla"
     normalize_name("FELIX ARVID ULF", "KJELLBERG") == "Felix Arvid Ulf Kjellberg"
     """
-    name_parts = " ".join([firstname, lastname]).split(" ")
-    fullnanme = " ".join(map(capitalize, name_parts))
-    return fullnanme
+    name_parts = " ".join([first_name, last_name]).split(" ")
+    full_name = " ".join(map(capitalize, name_parts))
+    return full_name
 
 
 def capitalize(word):
@@ -49,7 +48,8 @@ def convert_html(majors):
         contents.append(div)
     contents = "\n".join(contents)
 
-    html_code = """<html>
+    html_code = """<!DOCTYPE html>
+    <html>
     <head>
         <title>Elite of NTIC</title>
     </head>
