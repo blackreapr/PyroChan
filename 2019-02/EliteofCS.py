@@ -8,15 +8,17 @@ from operator import itemgetter
 
 def scrape_xml(document):
     admis = []
+
     for tr in document.iterfind('page/table/tr'):
         tds = list(tr)
-        if len(tds) is 25 and str(tds[24].text) == "Admis(e)":
-            last = str(tds[0].text)
-            first = str(tds[1].text)
+        if len(tds) is 40 and str(tds[39].text) == "Admis(e)":
+            last = str(tds[1].text)
+            first = str(tds[2].text)
             fullname = normalize_name(first, last)
-            moy = str(tds[22].text).replace(",", ".")
+            moy = str(tds[37].text).replace(",", ".")
             student = [fullname, moy]
             admis.append(student)
+
     return admis
 
 
@@ -43,7 +45,7 @@ def sort_students(unsorted_students):
 def convert_html(majors):
     contents = []
     for student in majors:
-        div = "<tr><td>#{i}</td> <td>{fullname}</td><td><i>{moy}</i></td></tr>".format(
+        div = "<tr><td>#{i}</td><td>{fullname}</td><td><i>{moy}</i></td></tr>".format(
            i=len(contents)+1, fullname=student[0], moy=student[1])
         contents.append(div)
     contents = "\n".join(contents)
@@ -51,10 +53,10 @@ def convert_html(majors):
     html_code = """<!DOCTYPE html>
     <html>
     <head>
-        <title>Elite of NTIC</title>
+        <title>Elite of NTIC — L2 (2018-2019)</title>
     </head>
     <body>
-         <h1 align="center">Elite of NTIC</h1>
+         <h1 align="center">Elite of NTIC — L2 (2018-2019)</h1>
          <content>
          <table>
          {content}
