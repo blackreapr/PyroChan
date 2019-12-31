@@ -2,8 +2,7 @@ import random
 from playsound import playsound
 
 """
-my easy approach: The insults in the audio file must be in the same order as in the text file
-You can simply suggest timing for this script to run using windows task scheduler 
+my easy approach: The insults in the audio file must be in the same order as in the text file.
 """
 
 
